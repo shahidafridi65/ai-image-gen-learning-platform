@@ -1,14 +1,14 @@
-// src/components/layout/Sidebar.jsx
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { 
-  Home, 
-  BookOpen, 
-  Calendar, 
+import {
+  Home,
+  BookOpen,
+  Calendar,
   Target,
   Settings,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  FileText
 } from 'lucide-react';
 import { useCurriculum } from '../../contexts/CurriculumContext';
 
@@ -20,6 +20,7 @@ const Sidebar = () => {
   const navigation = [
     { name: 'Dashboard', href: '/', icon: Home },
     { name: 'Curriculum', href: '/phase/1', icon: BookOpen },
+    { name: 'Documentation', href: '/documentation', icon: FileText },
     { name: 'Schedule', href: '/schedule', icon: Calendar },
     { name: 'Progress', href: '/progress', icon: Target },
     { name: 'Settings', href: '/settings', icon: Settings },
@@ -56,11 +57,10 @@ const Sidebar = () => {
             <Link
               key={item.name}
               to={item.href}
-              className={`flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors ${
-                isActive(item.href)
-                  ? 'bg-blue-50 text-blue-600 border-r-2 border-blue-600'
-                  : 'text-gray-600 hover:bg-gray-50'
-              }`}
+              className={`flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors ${isActive(item.href)
+                ? 'bg-blue-50 text-blue-600 border-r-2 border-blue-600'
+                : 'text-gray-600 hover:bg-gray-50'
+                }`}
             >
               <Icon className="w-5 h-5 flex-shrink-0" />
               {!isCollapsed && <span className="font-medium">{item.name}</span>}
@@ -78,7 +78,7 @@ const Sidebar = () => {
               <div key={phase.id} className="flex items-center justify-between">
                 <span className="text-xs text-gray-600 truncate">{phase.title}</span>
                 <div className="w-12 bg-gray-200 rounded-full h-2">
-                  <div 
+                  <div
                     className={`h-2 rounded-full ${getPhaseProgressColor(phase.color)}`}
                     style={{ width: '0%' }}
                   ></div>

@@ -7,6 +7,7 @@ import WeekPage from './pages/weeks/WeekPage';
 import DayPage from './pages/days/DayPage';
 import './styles/globals.css';
 import PhasePage from './components/phase/PhasePage';
+import Documentation from './pages/Documentation';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <main className="flex-1 overflow-auto">
               <Routes>
                 <Route path="/" element={<Dashboard />} />
+                <Route path="/documentation" element={<Documentation />} />
                 <Route path="/phase/:phaseId" element={<PhasePage />} />
                 <Route path="/phase/:phaseId/week/:weekId" element={<WeekPage />} />
                 <Route path="/phase/:phaseId/week/:weekId/day/:dayId" element={<DayPage />} />

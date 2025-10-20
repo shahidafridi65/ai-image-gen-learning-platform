@@ -99,7 +99,7 @@ const Dashboard = () => {
           <h1 className="text-4xl font-bold mb-4">{curriculum.title}</h1>
           <p className="text-xl text-blue-100 mb-6">{curriculum.description}</p>
           <div className="flex gap-4">
-            <Link 
+            <Link
               to="/phase/1/week/1/day/1"
               className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors"
             >
@@ -143,12 +143,20 @@ const Dashboard = () => {
       <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
         <h3 className="text-xl font-bold text-gray-800 mb-4">Quick Actions</h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <Link 
+          <Link
             to="/phase/1/week/1/day/1"
             className="flex flex-col items-center p-4 bg-gray-50 rounded-lg hover:bg-blue-50 transition-colors"
           >
             <BookOpen className="w-8 h-8 text-blue-600 mb-2" />
             <span className="text-sm font-medium">Continue Learning</span>
+          </Link>
+
+          <Link
+            to="/documentation"
+            className="flex flex-col items-center p-4 bg-gray-50 rounded-lg hover:bg-indigo-50 transition-colors"
+          >
+            <BookOpen className="w-8 h-8 text-indigo-600 mb-2" />
+            <span className="text-sm font-medium">Documentation</span>
           </Link>
           <button className="flex flex-col items-center p-4 bg-gray-50 rounded-lg hover:bg-green-50 transition-colors">
             <Code2 className="w-8 h-8 text-green-600 mb-2" />

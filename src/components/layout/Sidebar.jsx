@@ -20,10 +20,11 @@ const Sidebar = () => {
   const navigation = [
     { name: 'Dashboard', href: '/', icon: Home },
     { name: 'Curriculum', href: '/phase/1', icon: BookOpen },
-    { name: 'Documentation', href: '/documentation', icon: FileText },
-    { name: 'Schedule', href: '/schedule', icon: Calendar },
-    { name: 'Progress', href: '/progress', icon: Target },
-    { name: 'Settings', href: '/settings', icon: Settings },
+    { name: 'AI Image Documentation', href: '/documentation', icon: FileText },
+    { name: 'AI Agent Docs', href: '/ai-agent-documentation', icon: FileText },
+    // { name: 'Schedule', href: '/schedule', icon: Calendar },
+    // { name: 'Progress', href: '/progress', icon: Target },
+    // { name: 'Settings', href: '/settings', icon: Settings },
   ];
 
   const isActive = (href) => {

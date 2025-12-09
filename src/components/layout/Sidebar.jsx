@@ -8,7 +8,8 @@ import {
   Settings,
   ChevronLeft,
   ChevronRight,
-  FileText
+  FileText,
+  Globe
 } from 'lucide-react';
 import { useCurriculum } from '../../contexts/CurriculumContext';
 
@@ -22,6 +23,7 @@ const Sidebar = () => {
     { name: 'Curriculum', href: '/phase/1', icon: BookOpen },
     { name: 'AI Image Documentation', href: '/documentation', icon: FileText },
     { name: 'AI Agent Docs', href: '/ai-agent-documentation', icon: FileText },
+    { name: 'Companies', href: '/companies', icon: Globe },
     // { name: 'Schedule', href: '/schedule', icon: Calendar },
     // { name: 'Progress', href: '/progress', icon: Target },
     // { name: 'Settings', href: '/settings', icon: Settings },

@@ -10,6 +10,7 @@ import PhasePage from './components/phase/PhasePage';
 import Documentation from './pages/Documentation';
 import AiAgentDocumentation from './pages/AiAgentDocumentation';
 import Companies from './pages/Companies';
+import DSARoadmap from './pages/DSARoadmap';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/documentation" element={<Documentation />} />
                 <Route path="/ai-agent-documentation" element={<AiAgentDocumentation />} />
+                <Route path="/dsa-roadmap" element={<DSARoadmap />} />
                 <Route path="/companies" element={<Companies />} />
                 <Route path="/phase/:phaseId" element={<PhasePage />} />
                 <Route path="/phase/:phaseId/week/:weekId" element={<WeekPage />} />

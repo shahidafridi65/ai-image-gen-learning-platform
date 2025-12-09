@@ -12,7 +12,7 @@ const DSARoadmap = () => {
             try {
                 setIsLoading(true);
                 // Load from correct path
-                const response = await fetch('/public/documentation/1_Month_DSA_Roadmap.md');
+                const response = await fetch('/documentation/1_Month_DSA_Roadmap.md');
                 if (!response.ok) throw new Error('Failed to load roadmap');
                 const text = await response.text();
                 setMarkdownContent(text);

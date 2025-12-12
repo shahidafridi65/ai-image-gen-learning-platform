@@ -80,29 +80,29 @@ const Companies = () => {
 					const cells = rawLine.split('|')
 						.filter(cell => cell.trim() !== '')
 						.map(cell => cell.trim().replace(/\*\*/g, ''));
-					
+
 					if (cells.length > 0) {
 						currentTable.rows.push(cells);
-						
+
 						// Extract filter values based on headers and tab type
 						const headers = currentTable.headers.map(h => h.toLowerCase());
-						
+
 						cells.forEach((cell, idx) => {
 							const header = headers[idx];
 							if (!header || !cell) return;
-							
+
 							// Extract headquarters
-							if (header.includes('headquarter') || header.includes('headquarters') || 
-								header.includes('hq') || header.includes('location') || 
+							if (header.includes('headquarter') || header.includes('headquarters') ||
+								header.includes('hq') || header.includes('location') ||
 								header.includes('city') || header === 'hq') {
 								filters.headquarters.add(cell);
 							}
-							
+
 							// Extract remote types - different patterns for different tabs
 							if (tabId === 'all') {
 								// For "All Product Based Companies"
 								if (header.includes('remote')) {
-									if (cell === 'TRUE' || cell === 'FALSE' || cell === 'PARTIAL' || 
+									if (cell === 'TRUE' || cell === 'FALSE' || cell === 'PARTIAL' ||
 										cell === 'YES' || cell === 'NO') {
 										filters.remoteTypes.add(cell);
 									}
@@ -111,14 +111,14 @@ const Companies = () => {
 								// For "Indian Product Companies"
 								if (header.includes('remote') || header.includes('hybrid')) {
 									// Handle HYBRID, ONSITE, REMOTE values
-									if (cell === 'HYBRID' || cell === 'ONSITE' || cell === 'REMOTE' || 
+									if (cell === 'HYBRID' || cell === 'ONSITE' || cell === 'REMOTE' ||
 										cell.includes('HYBRID') || cell.includes('ONSITE') || cell.includes('REMOTE')) {
 										filters.remoteTypes.add(cell);
 									}
 								}
 							} else if (tabId === 'startups') {
 								// For "Startup Companies"
-								if (header.includes('remote') || header.includes('mode') || 
+								if (header.includes('remote') || header.includes('mode') ||
 									header.includes('work') || header.includes('location')) {
 									// Handle REMOTE, HYBRID, ONSITE values
 									if (cell === 'REMOTE' || cell === 'HYBRID' || cell === 'ONSITE' ||
@@ -135,9 +135,9 @@ const Companies = () => {
 				// End of table conditions
 				if (isEmptyLine || !hasPipe) {
 					if (currentTable && currentTable.headers.length > 0 && currentTable.rows.length > 0) {
-						tables.push({...currentTable});
+						tables.push({ ...currentTable });
 					}
-					
+
 					currentTable = null;
 					inTable = false;
 					separatorLineFound = false;
@@ -148,7 +148,7 @@ const Companies = () => {
 
 		// Last table
 		if (inTable && currentTable && currentTable.headers.length > 0) {
-			tables.push({...currentTable});
+			tables.push({ ...currentTable });
 		}
 
 		return { tables, filters };
@@ -175,7 +175,7 @@ const Companies = () => {
 			const filteredRows = table.rows.filter(row => {
 				// Combine all cell values for global search
 				const rowText = row.join(' ').toLowerCase();
-				
+
 				// Check global search
 				if (searchQuery) {
 					const searchLower = searchQuery.toLowerCase();
@@ -186,11 +186,11 @@ const Companies = () => {
 
 				// Check field-specific filters
 				const headers = table.headers.map(h => h.toLowerCase());
-				
+
 				// Remote filter
 				if (selectedFilters.remoteType) {
 					let remoteIndex = -1;
-					
+
 					// Try different header patterns for remote column
 					const remoteHeaders = ['remote', 'hybrid', 'remote/hybrid', 'work mode', 'location'];
 					for (const header of remoteHeaders) {
@@ -200,7 +200,7 @@ const Companies = () => {
 							break;
 						}
 					}
-					
+
 					if (remoteIndex !== -1) {
 						const cellValue = row[remoteIndex] || '';
 						if (!cellValue.includes(selectedFilters.remoteType)) {
@@ -212,7 +212,7 @@ const Companies = () => {
 				// Headquarters filter
 				if (selectedFilters.headquarters) {
 					let hqIndex = -1;
-					
+
 					// Try different header patterns for headquarters
 					const hqHeaders = ['headquarter', 'headquarters', 'hq', 'location', 'city', 'head office'];
 					for (const header of hqHeaders) {
@@ -222,7 +222,7 @@ const Companies = () => {
 							break;
 						}
 					}
-					
+
 					if (hqIndex !== -1) {
 						const cellValue = row[hqIndex] || '';
 						if (!cellValue.toLowerCase().includes(selectedFilters.headquarters.toLowerCase())) {
@@ -249,17 +249,17 @@ const Companies = () => {
 				if (!response.ok) throw new Error(`Failed to load ${activeTab} markdown`);
 				const text = await response.text();
 				setMarkdownContent(text);
-				
+
 				// Reset filters when tab changes
 				setSelectedFilters({
 					remoteType: '',
 					headquarters: '',
 				});
-				
+
 				// Parse tables with tab-specific logic
 				const { tables, filters } = parseMarkdownToTables(text, activeTab);
 				setAllTablesData(tables);
-				
+
 				// Normalize remote types for better display
 				const normalizedRemoteTypes = new Set();
 				Array.from(filters.remoteTypes).forEach(type => {
@@ -276,7 +276,7 @@ const Companies = () => {
 						else normalizedRemoteTypes.add(type);
 					}
 				});
-				
+
 				setAvailableFilters({
 					headquarters: filters.headquarters,
 					remoteTypes: normalizedRemoteTypes,
@@ -405,12 +405,12 @@ const Companies = () => {
 	};
 
 	const handleDownload = () => {
-		const fileName = activeTab === 'all' 
-			? 'complete_product_companies_list.md' 
+		const fileName = activeTab === 'all'
+			? 'complete_product_companies_list.md'
 			: activeTab === 'indian'
-			? 'indian_product_companies_fullstack_ai_ml.md'
-			: 'companies_3_4years.md';
-		
+				? 'indian_product_companies_fullstack_ai_ml.md'
+				: 'companies_3_4years.md';
+
 		const element = document.createElement('a');
 		const file = new Blob([markdownContent], { type: 'text/markdown' });
 		element.href = URL.createObjectURL(file);
@@ -448,12 +448,12 @@ const Companies = () => {
 
 	return (
 		<div className="min-h-screen bg-gray-50">
-			<div className="max-w-6xl mx-auto p-6">
-				{/* Header */}
-				<div className="flex items-center justify-between mb-8">
+			<div className="max-w-6xl mx-auto p-4 sm:p-6">
+				{/* Header - Responsive */}
+				<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 sm:mb-8">
 					<Link
 						to={location.state?.from || '/'}
-						className="flex items-center px-4 py-2 text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-colors"
+						className="flex items-center px-3 sm:px-4 py-2 text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-colors text-sm sm:text-base w-full sm:w-auto"
 					>
 						<ChevronLeft className="w-4 h-4 mr-1" />
 						Back to {location.state?.from === '/dashboard' ? 'Dashboard' : 'Home'}
@@ -461,102 +461,102 @@ const Companies = () => {
 
 					<button
 						onClick={handleDownload}
-						className="flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors shadow-sm"
+						className="flex items-center justify-center px-3 sm:px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors shadow-sm text-sm sm:text-base w-full sm:w-auto"
 					>
 						<Download className="w-4 h-4 mr-2" />
 						Download List
 					</button>
 				</div>
 
-				{/* Companies Content */}
-				<div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
-					{/* Tab Navigation */}
+				{/* Companies Content - Responsive */}
+				<div className="bg-white rounded-lg sm:rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+					{/* Tab Navigation - Responsive */}
 					<div className="border-b border-gray-200">
-						<div className="flex space-x-1 p-4">
+						<div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-1 p-3 sm:p-4">
 							{tabs.map((tab) => {
 								const Icon = tab.icon;
 								const isActive = activeTab === tab.id;
-								
+
 								return (
 									<button
 										key={tab.id}
 										onClick={() => setActiveTab(tab.id)}
 										className={`
-											flex items-center px-4 py-3 rounded-lg transition-all duration-200
-											${isActive 
-												? 'bg-blue-50 text-blue-700 border border-blue-200' 
+                      flex items-center justify-center sm:justify-start px-3 sm:px-4 py-2 rounded-lg transition-all duration-200 text-sm sm:text-base
+                      ${isActive
+												? 'bg-blue-50 text-blue-700 border border-blue-200'
 												: 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'
 											}
-										`}
+                    `}
 									>
-										<Icon className="w-4 h-4 mr-2" />
-										<span className="font-medium">{tab.label}</span>
+										<Icon className="w-4 h-4 mr-2 flex-shrink-0" />
+										<span className="font-medium truncate">{tab.label}</span>
 									</button>
 								);
 							})}
 						</div>
 					</div>
 
-					<div className="p-8">
-						<div className="flex items-center mb-8">
-							<div className="bg-blue-100 p-3 rounded-lg mr-4">
-								<BookOpen className="w-8 h-8 text-blue-600" />
+					<div className="p-4 sm:p-6 md:p-8">
+						<div className="flex flex-col sm:flex-row items-start sm:items-center mb-6">
+							<div className="bg-blue-100 p-3 rounded-lg mb-4 sm:mb-0 sm:mr-4 flex-shrink-0">
+								<BookOpen className="w-6 h-6 sm:w-8 sm:h-8 text-blue-600" />
 							</div>
-							<div>
-								<h1 className="text-3xl font-bold text-gray-800">
-									{activeTab === 'all' ? 'Complete Product Companies List' : 
-									 activeTab === 'indian' ? 'Indian Product Companies - Full Stack AI/ML' : 
-									 'Startup Companies (Below 3 Years + 3-4 Years)'}
+							<div className="flex-1">
+								<h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800">
+									{activeTab === 'all' ? 'Complete Product Companies List' :
+										activeTab === 'indian' ? 'Indian Product Companies - Full Stack AI/ML' :
+											'Startup Companies (Below 3 Years + 3-4 Years)'}
 								</h1>
-								<p className="text-lg text-gray-600 mt-2">
-									{activeTab === 'all' 
-										? 'Comprehensive list of product-based companies worldwide' 
+								<p className="text-gray-600 mt-1 sm:mt-2 text-sm sm:text-base">
+									{activeTab === 'all'
+										? 'Comprehensive list of product-based companies worldwide'
 										: activeTab === 'indian'
-										? 'Curated list of Indian product companies working in AI/ML domain'
-										: 'Startup companies actively hiring for Full Stack, React JS, and Software Engineer roles'
+											? 'Curated list of Indian product companies working in AI/ML domain'
+											: 'Startup companies actively hiring for Full Stack, React JS, and Software Engineer roles'
 									}
 								</p>
 							</div>
 						</div>
 
-						{/* Search and Filter Section */}
-						<div className="mb-8 p-4 bg-gray-50 rounded-lg border border-gray-200">
-							<div className="flex flex-col md:flex-row gap-4 mb-4">
+						{/* Search and Filter Section - Responsive */}
+						<div className="mb-6 sm:mb-8 p-3 sm:p-4 bg-gray-50 rounded-lg border border-gray-200">
+							<div className="flex flex-col gap-3 sm:gap-4 mb-4">
 								{/* Search Input */}
-								<div className="flex-1">
+								<div className="w-full">
 									<div className="relative">
-										<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+										<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 sm:w-5 sm:h-5" />
 										<input
 											type="text"
 											placeholder="Search companies..."
 											value={searchQuery}
 											onChange={(e) => setSearchQuery(e.target.value)}
-											className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+											className="w-full pl-9 sm:pl-10 pr-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
 										/>
 									</div>
 								</div>
 							</div>
 
-							{/* Filter Controls */}
-							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+							{/* Filter Controls - Responsive */}
+							<div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
 								{/* Remote Policy Filter */}
 								<div>
-									<label className="block text-sm font-medium text-gray-700 mb-1">
+									<label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
 										Remote Policy
 									</label>
 									<select
 										value={selectedFilters.remoteType}
 										onChange={(e) => handleFilterChange('remoteType', e.target.value)}
-										className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+										className="w-full px-3 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
 									>
 										<option value="">All Remote Types</option>
 										{sortedRemoteTypes.map(type => (
 											<option key={type} value={type}>
-												{type === 'TRUE' ? 'Remote (TRUE)' : 
-												 type === 'FALSE' ? 'Remote (FALSE)' : 
-												 type === 'PARTIAL' ? 'Remote (PARTIAL)' : 
-												 type === 'YES' ? 'AI/ML Hiring (YES)' : 
-												 type === 'NO' ? 'AI/ML Hiring (NO)' : type}
+												{type === 'TRUE' ? 'Remote (TRUE)' :
+													type === 'FALSE' ? 'Remote (FALSE)' :
+														type === 'PARTIAL' ? 'Remote (PARTIAL)' :
+															type === 'YES' ? 'AI/ML Hiring (YES)' :
+																type === 'NO' ? 'AI/ML Hiring (NO)' : type}
 											</option>
 										))}
 									</select>
@@ -564,13 +564,13 @@ const Companies = () => {
 
 								{/* Headquarters Filter */}
 								<div>
-									<label className="block text-sm font-medium text-gray-700 mb-1">
+									<label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
 										Headquarters
 									</label>
 									<select
 										value={selectedFilters.headquarters}
 										onChange={(e) => handleFilterChange('headquarters', e.target.value)}
-										className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+										className="w-full px-3 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
 									>
 										<option value="">All Locations</option>
 										{sortedHeadquarters.map(hq => (
@@ -580,17 +580,17 @@ const Companies = () => {
 								</div>
 							</div>
 
-							{/* Active Filters Indicator */}
+							{/* Active Filters Indicator - Responsive */}
 							{hasActiveFilters && (
-								<div className="mt-4 flex items-center justify-between">
-									<div className="text-sm text-gray-600 flex flex-wrap gap-2">
+								<div className="mt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+									<div className="text-xs sm:text-sm text-gray-600 flex flex-wrap gap-1 sm:gap-2">
 										{searchQuery && <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Search: "{searchQuery}"</span>}
 										{selectedFilters.remoteType && <span className="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">Remote: {selectedFilters.remoteType}</span>}
 										{selectedFilters.headquarters && <span className="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs">HQ: {selectedFilters.headquarters}</span>}
 									</div>
 									<button
 										onClick={clearFilters}
-										className="text-sm text-red-600 hover:text-red-700 hover:bg-red-50 px-3 py-1 rounded-lg transition-colors"
+										className="text-xs sm:text-sm text-red-600 hover:text-red-700 hover:bg-red-50 px-3 py-1 rounded-lg transition-colors mt-2 sm:mt-0"
 									>
 										Clear all filters
 									</button>
@@ -598,8 +598,12 @@ const Companies = () => {
 							)}
 						</div>
 
-						<div className="border-t border-gray-200 pt-6">
-							{parsedTables.length > 0 ? parsedTables : renderMarkdownContent(markdownContent)}
+						<div className="border-t border-gray-200 pt-4 sm:pt-6">
+							<div className="overflow-x-auto -mx-4 sm:mx-0">
+								<div className="min-w-full">
+									{parsedTables.length > 0 ? parsedTables : renderMarkdownContent(markdownContent)}
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

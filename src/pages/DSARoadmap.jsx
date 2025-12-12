@@ -249,10 +249,10 @@ const DSARoadmap = () => {
                                 <th
                                     key={index}
                                     className={`px-4 py-3 text-left font-semibold ${isCompanyTable
+                                        ? 'text-white'
+                                        : isWeeklyTable
                                             ? 'text-white'
-                                            : isWeeklyTable
-                                                ? 'text-white'
-                                                : 'text-gray-700'
+                                            : 'text-gray-700'
                                         } text-sm uppercase tracking-wider`}
                                 >
                                     {renderCellContent(header)}
@@ -270,8 +270,8 @@ const DSARoadmap = () => {
                                     <td
                                         key={cellIndex}
                                         className={`px-4 py-3 text-sm ${isCompanyTable && cellIndex === 0
-                                                ? 'font-semibold text-gray-900'
-                                                : 'text-gray-700'
+                                            ? 'font-semibold text-gray-900'
+                                            : 'text-gray-700'
                                             }`}
                                     >
                                         <div className="break-words max-w-xs">
@@ -346,69 +346,69 @@ const DSARoadmap = () => {
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                {/* Header */}
-                <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 gap-4">
+            <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6 md:py-8">
+                {/* Header - Responsive */}
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 sm:mb-8 gap-3 sm:gap-4">
                     <div className="flex items-center">
                         <Link
                             to={location.state?.from || '/'}
-                            className="flex items-center px-4 py-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors mr-4"
+                            className="flex items-center px-3 sm:px-4 py-1 sm:py-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors mr-3 sm:mr-4 text-sm sm:text-base"
                         >
                             <ChevronLeft className="w-4 h-4 mr-1" />
                             Back
                         </Link>
                         <div>
-                            <h1 className="text-2xl font-bold text-gray-900">DSA Roadmap</h1>
-                            <p className="text-gray-600">1-Month Intensive Preparation</p>
+                            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">DSA Roadmap</h1>
+                            <p className="text-gray-600 text-xs sm:text-sm md:text-base">1-Month Intensive Preparation</p>
                         </div>
                     </div>
 
                     <button
                         onClick={handleDownload}
-                        className="flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors shadow-sm"
+                        className="flex items-center justify-center px-3 sm:px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors shadow-sm text-sm sm:text-base w-full sm:w-auto mt-3 sm:mt-0"
                     >
-                        <Download className="w-4 h-4 mr-2" />
+                        <Download className="w-4 h-4 mr-1 sm:mr-2" />
                         Download Roadmap
                     </button>
                 </div>
 
-                {/* Roadmap Content Card */}
-                <div className="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden mb-8">
+                {/* Roadmap Content Card - Responsive */}
+                <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl border border-gray-200 overflow-hidden mb-6 sm:mb-8">
                     <div className="p-1 bg-gradient-to-r from-blue-500 to-purple-600"></div>
 
-                    <div className="p-8">
-                        {/* Title Section */}
-                        <div className="flex items-start mb-8">
-                            <div className="bg-gradient-to-br from-blue-100 to-purple-100 p-4 rounded-xl mr-4">
-                                <Binary className="w-10 h-10 text-blue-600" />
+                    <div className="p-4 sm:p-6 md:p-8">
+                        {/* Title Section - Responsive */}
+                        <div className="flex flex-col sm:flex-row items-start mb-6 sm:mb-8">
+                            <div className="bg-gradient-to-br from-blue-100 to-purple-100 p-3 sm:p-4 rounded-lg sm:rounded-xl mb-4 sm:mb-0 sm:mr-4 flex-shrink-0">
+                                <Binary className="w-8 h-8 sm:w-10 sm:h-10 text-blue-600" />
                             </div>
                             <div className="flex-1">
-                                <div className="flex items-center gap-4 mb-2">
-                                    <h1 className="text-3xl font-bold text-gray-900">1-Month DSA Roadmap</h1>
-                                    <span className="px-3 py-1 bg-blue-100 text-blue-800 text-sm font-semibold rounded-full flex items-center">
+                                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-2">
+                                    <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">1-Month DSA Roadmap</h1>
+                                    <span className="px-2 sm:px-3 py-1 bg-blue-100 text-blue-800 text-xs sm:text-sm font-semibold rounded-full flex items-center self-start sm:self-center">
                                         <GitBranch className="w-3 h-3 mr-1" />
                                         AI Agent Engineers
                                     </span>
                                 </div>
-                                <p className="text-gray-600 mb-3">
+                                <p className="text-gray-600 text-sm sm:text-base mb-2 sm:mb-3">
                                     Interview-ready edition focusing on product-based companies and AI system building
                                 </p>
-                                <div className="flex items-center gap-4 text-sm text-gray-500">
+                                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-2 text-xs sm:text-sm text-gray-500">
                                     <span className="flex items-center">
-                                        <Calendar className="w-4 h-4 mr-1" />
+                                        <Calendar className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
                                         4 Weeks • 2-3 hours/day
                                     </span>
-                                    <span>•</span>
+                                    <span className="hidden sm:inline">•</span>
                                     <span className="flex items-center">
-                                        <Target className="w-4 h-4 mr-1" />
+                                        <Target className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
                                         Coding Interviews & AI Applications
                                     </span>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Content */}
-                        <div className="prose prose-lg max-w-none">
+                        {/* Content - Responsive */}
+                        <div className="prose prose-sm sm:prose-base lg:prose-lg max-w-none overflow-x-auto">
                             {renderRoadmap()}
                         </div>
                     </div>

@@ -6,6 +6,25 @@ This curriculum guides you from Python fundamentals to becoming a professional A
 
 ---
 
+## 🧠 The "Architectural Thinking" Framework
+*Stop coding blindly. Move from "How do I use this?" to "How does this break?"*
+
+### 1. The 3 Universal Constraints
+Every piece of software fights against **Time**, **Space**, and **Scale**. Before you write a single line of code for any topic, ask these three questions:
+
+**Compute (Latency/Throughput):** "If 1,000 users hit this at once, will it crash?"**
+**Memory (VRAM/RAM):** "Does the memory grow linearly or quadratically? Where is the bottleneck?"
+**Data Flow (I/O):** "Are we moving too much data between CPU and GPU?"
+
+| Constraint | The "Architect" Question | Example Application |
+|---|---|---|
+| **TIME** ⏱️(Latency) | **"What happens if this operation takes too long?"** | • **Python:** Is searching a List `O(n)` vs. a Set `O(1)`? <br>• **LLM:** Why is generating 100 tokens slower than processing 1000 prompt tokens? |
+| **SPACE** 💾(Memory) | **"Where does this data live, and when does it run out?"** | • **ML:** Does loading this dataset crash my RAM?<br>• **LLM:** How does **KV Cache** explode VRAM as context grows? |
+| **SCALE** 📈(Volume) | **"What breaks if 1,000 users do this at once?"** | • **DB:** What happens if two agents write to memory at the same time?• **RAG:** How does retrieval accuracy drop when searching 1M docs vs 100? |
+
+
+---
+
 ## Phase 1: ML Engineer Foundation (Weeks 1-16)
 *Goal: Solid Python, Machine Learning, and production deployment skills.*
 
